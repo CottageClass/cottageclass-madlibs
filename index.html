@@ -54,7 +54,7 @@
           <div class="body1-center-black">We help parents &amp; teachers create new options for education and care. What do you need for your child?</div>
         </div>
         <div id="animation">
-        <h5 class="h5-center-black madlibs">A 
+        <h5 class="h5-center-black madlibs">{{ indefiniteArticle }} 
             <a href="http://www.cottageclass.com" class="madlibs-link-1" :style="{color: activityColor}">{{ activity }}</a>
             in <a href="http://www.cottageclass.com" class="madlibs-link-2" :style="{color: placeColor}">{{ place }}</a> with <a href="http://www.cottageclass.com" class="madlibs-link-3" :style="{color: bonusColor}">{{ bonus }}</a>?</h5>
       </div>
@@ -191,19 +191,27 @@
           },
           bonus: function () {
             return phrases[2][this.whichBonus % phrases[2].length]
+          },
+          indefiniteArticle: function () {
+            var l = phrases[0][this.whichActivity % phrases[0].length][0]
+            if ((l == "a") || (l == "e") || (l == "i") || (l == "o") || (l == "u")) {
+              return "An"
+            }  else {
+                return "A"
+              }
           }
         },
         methods: {
           tick: function () {
             if ((this.time % delay) == 0)             // slow us down by delay
             {            // change the item for the phrase I'm on
-              if (this.phrase == 0) {
+              if (this.phrase == 1) {
                 this.whichActivity++
                 this.activityColor = colors[this.whichColor++ % colors.length]
-                } else if (this.phrase == 1) {
+                } else if (this.phrase == 2) {
                   this.whichPlace++
                   this.placeColor = colors[this.whichColor++ % colors.length]
-                } else if (this.phrase == 2) {
+                } else if (this.phrase == 0) {
                   this.whichBonus++
                   this.bonusColor = colors[this.whichColor++ % colors.length]
                   }
